@@ -1,12 +1,19 @@
 global_costmap:
-  plugins: 
+  plugins:
     - {name: static_layer, type: "costmap_2d::StaticLayer"}
     - {name: vector_layer, type: "costmap_2d::StaticLayer"}
+    - {name: adaptive_cost_layer, type: "costmap_2d::StaticLayer"}
   global_frame: map
   robot_base_frame: base_footprint
   update_frequency: 1.0
+  publish_frequency: 1.0
   static_layer:
     map_topic: "map"
   vector_layer:
     map_topic: "vector_map"
     use_maximum: true
+    subscribe_to_updates: true
+  adaptive_cost_layer:
+    map_topic: "adaptive_costmap"
+    use_maximum: true
+    subscribe_to_updates: true
