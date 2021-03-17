@@ -6,16 +6,18 @@
     <include file="$(find gslambot)/launch/warehouse_world.launch"/>
 
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model practice_v3" respawn="false" output="screen"/>
-    
 <!--
     <rosparam file="$(find lexx_auto_launch)/config/diff_drive_controller.yaml" command="load" />
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
 	    output="screen" args="diff_drive_controller"/>
 -->
-
     <rosparam file="$(find lexx_auto_launch)/config/controller_effort.yaml" command="load" />
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-	    output="log" args="left_effort_controller
-        right_effort_controller">
+	    output="screen" ns="/"
+        args="
+            /controller/state
+            /controller/position/left_effort_controller
+            /controller/position/right_effort_controller
+            ">
     </node>
 </launch>
