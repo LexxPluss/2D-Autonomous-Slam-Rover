@@ -1,31 +1,22 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Run the map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find gslambot)/maps/room_ok.yaml" output="screen"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find lexx_auto_launch)/maps/room_ok/room_ok.yaml" output="screen"/>
   <node name="vector_map" pkg="vector_map" type="vector_map.py" output="screen">
-    <param name="yaml_file_path" value="$(find gslambot)/maps/room_ok.yaml" />
-    <param name="map_file_path" value="$(find gslambot)/maps/room_ok.pgm" />
-    <param name="osm_file_path" value="$(find vector_map)/scripts/room_ok_test.osm"/>
+    <param name="osm_file_path" value="$(find lexx_auto_launch)/maps/room_ok/room_ok.osm" />
+    <param name="yaml_file_path" value="$(find lexx_auto_launch)/maps/room_ok/room_ok.yaml" />
+    <param name="map_file_path" value="$(find lexx_auto_launch)/maps/room_ok/room_ok.pgm" />
   </node>
 
   <!-- Run amcl -->
   <include file="$(find amcl)/examples/amcl_diff.launch" >
   </include>
 
-  <node name="goal_pose_list_pub" pkg="goal_pose_list_pub" type="goal_pose_list_publisher_test.py" output="screen">
-    <param name="osm_file_path" value="$(find vector_map)/scripts/room_ok_test.osm"/>
-    <param name="yaml_file_path" value="$(find gslambot)/maps/room_ok.yaml" />
-    <param name="map_file_path" value="$(find gslambot)/maps/room_ok.pgm" />
+  <node name="goal_pose_list_pub" pkg="goal_pose_list_pub" type="goal_pose_list_publisher.py" output="screen">
+    <param name="osm_file_path" value="$(find lexx_auto_launch)/maps/room_ok/room_ok.osm" />
+    <param name="yaml_file_path" value="$(find lexx_auto_launch)/maps/room_ok/room_ok.yaml" />
+    <param name="map_file_path" value="$(find lexx_auto_launch)/maps/room_ok/room_ok.pgm" />
   </node>
-
-  <!-- Run Occupancy Check-->
-  <!--
-  <node pkg="occupancy_check" type="occupancy_check" name="occupancy_check" output="screen">
-    <rosparam command="load" file="$(find lexx_auto_launch)/maps/office_v3.yaml" />
-    <param name="data_file" value="$(find lexx_auto_launch)/config/data_for_v3.txt" />
-    <param name="name_file" value="$(find lexx_auto_launch)/config/area_name_for_v3.txt" />
-  </node>
-  -->
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <param name="controller_frequency" value="10.0"/>
