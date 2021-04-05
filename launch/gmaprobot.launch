@@ -3,7 +3,7 @@
     <param name="/use_sim_time" value="true" />
 
   <include file="$(find gslambot)/launch/warehouse_world.launch"/>
-  <arg name="model" default="$(find gslambot)/urdf/gmapbot.xacro"/>
+  <arg name="model" default="$(find gslambot)/urdf/practice_v3.xacro"/>
   <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
 
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
@@ -18,26 +18,13 @@
   <rosparam>
     joint_state_controller:
       type: joint_state_controller/JointStateController
-      publish_rate: 50
-    <!-- For practice_v3.xacro
+      publish_rate: 10
     left_controller:
-      type: effort_controllers/JointVelocityController
+      type: effort_controllers/JointEffortController
       joint: left_wheel_joint
-      pid: {p: 50.0, i: 0.1, d: 1.0}
     right_controller:
-      type: effort_controllers/JointVelocityController
+      type: effort_controllers/JointEffortController
       joint: right_wheel_joint
-      pid: {p: 50.0, i: 0.1, d: 1.0}
-    -->
-    <!-- For gmapbot.xacro -->
-    left_controller:
-      type: effort_controllers/JointVelocityController
-      joint: base_to_wheel2
-      pid: {p: 50.0, i: 0.1, d: 1.0}
-    right_controller:
-      type: effort_controllers/JointVelocityController
-      joint: base_to_wheel4
-      pid: {p: 50.0, i: 0.1, d: 1.0}
   </rosparam>
   <node name="controller_spawner" pkg="controller_manager"
         type="spawner" respawn="false"
@@ -46,5 +33,5 @@
         left_controller
         right_controller"/>
   
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gslambot)/launch/navigation.rviz" />
+  <!--<node name="rviz" pkg="rviz" type="rviz" args="-d $(find gslambot)/launch/navigation.rviz" />-->
 </launch>
