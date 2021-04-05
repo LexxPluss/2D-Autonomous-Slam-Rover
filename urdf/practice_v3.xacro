@@ -19,12 +19,12 @@
 		<transmission name="${prefix}_trans" type="SimpleTransmission">
 			<type>transmission_interface/SimpleTransmission</type>
 				<joint name="${prefix}_joint">
-					<!-- <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface> -->
 					<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+					<!--<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>-->
 				</joint>
 				<actuator name="${prefix}_motor">
-					<!-- <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface> -->
 					<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+					<!--<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>-->
 					<mechanicalReduction>1</mechanicalReduction>
 				</actuator>
 		</transmission>
@@ -117,11 +117,9 @@
 
 	<gazebo>
 		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-		<!--
 			<robotNamespace>/</robotNamespace>
 			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
 			<legacyModeNS>true</legacyModeNS>
-		-->
 		</plugin>
 	</gazebo>
 </robot>

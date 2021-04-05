@@ -15,10 +15,36 @@
 
   <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -z 0.1 -model robot_model" respawn="false" output="screen" />
 
-  <!--node name="slam_gmapping" pkg="gmapping" type="slam_gmapping"> </node>
- 
-    <remap from="scan" to="/robot/laser/scan"/>
-    <param name="base_link" value="base_footprint"/-->
-
+  <rosparam>
+    joint_state_controller:
+      type: joint_state_controller/JointStateController
+      publish_rate: 50
+    <!-- For practice_v3.xacro
+    left_controller:
+      type: effort_controllers/JointVelocityController
+      joint: left_wheel_joint
+      pid: {p: 50.0, i: 0.1, d: 1.0}
+    right_controller:
+      type: effort_controllers/JointVelocityController
+      joint: right_wheel_joint
+      pid: {p: 50.0, i: 0.1, d: 1.0}
+    -->
+    <!-- For gmapbot.xacro -->
+    left_controller:
+      type: effort_controllers/JointVelocityController
+      joint: base_to_wheel2
+      pid: {p: 50.0, i: 0.1, d: 1.0}
+    right_controller:
+      type: effort_controllers/JointVelocityController
+      joint: base_to_wheel4
+      pid: {p: 50.0, i: 0.1, d: 1.0}
+  </rosparam>
+  <node name="controller_spawner" pkg="controller_manager"
+        type="spawner" respawn="false"
+        output="screen" ns="/"
+        args="joint_state_controller
+        left_controller
+        right_controller"/>
+  
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gslambot)/launch/navigation.rviz" />
 </launch>
